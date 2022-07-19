@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+    "protocol": "http",
+    "image": {
+        "save_url": "../upload/images",
+        "host_url": "server/upload/images"
+    }
+}

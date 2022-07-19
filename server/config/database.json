@@ -1,0 +1,8 @@
+{
+    "username": "imageai",
+    "password": "imageai0000",
+    "database_name": "imageai",
+    "server_host": "localhost",
+    "server_port": 3306,
+    "server_socket": ""
+}

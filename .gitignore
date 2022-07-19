@@ -1,0 +1,6 @@
+# node 
+node_modules
+# build
+dist
+# python
+__pycache__
