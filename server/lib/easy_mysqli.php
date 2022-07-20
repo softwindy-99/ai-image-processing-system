@@ -178,7 +178,7 @@ class easy_mysqli
                     $result_key_string .= $result_key[$i] . ",";
                 }
             }
-            $sql_string = "SELECT {$result_key_string} FROM {$table} ";
+            $sql_string = "SELECT {$result_key_string} FROM {$table}";
             if ($stmt = mysqli_prepare($this->connect, $sql_string)) {
                 $stmt->store_result();
                 $stmt->execute();
