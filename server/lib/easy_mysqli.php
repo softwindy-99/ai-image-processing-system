@@ -183,8 +183,100 @@ class easy_mysqli
                 $result_key = array_merge($result_key);
                 $result_key = $this->makeValuesReferenced($result_key);
                 call_user_func_array(array($stmt, 'bind_result'), $result_key);
-                while($stmt->fetch()){
-                    array_push($result,$result_key);
+                while ($stmt->fetch()) {
+                    array_push($result, $result_key);
+                }
+                $stmt->close();
+                if (empty($result)) {
+                    return null;
+                } else {
+                    return $result;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /* 条件查询所有行-int值
+     *@method get_rows_int
+     *@for easy_mysqli
+     *@param {string} $table 表
+     *@param {string} $operate 比较符
+     *@param {string} $key 键
+     *@param {int} $value 值
+     *@param {array string} $result_key 要查询的字段
+     *@return {array} | {bool} | {null}
+     */
+    public function get_rows_int(string $table, array $result_key, string $key, int $value, string $operate = "=")
+    {
+        if ($this->connect_status) {
+            $result = array();
+            $result_key_string = "";
+            for ($i = 0; $i < count($result_key); $i++) {
+                if ($i === count($result_key) - 1) {
+                    $result_key_string .= $result_key[$i];
+                } else {
+                    $result_key_string .= $result_key[$i] . ",";
+                }
+            }
+            $sql_string = "SELECT {$result_key_string} FROM {$table} WHERE {$key} {$operate} {$value}";
+            if ($stmt = mysqli_prepare($this->connect, $sql_string)) {
+                $stmt->store_result();
+                $stmt->execute();
+                $result_key = array_merge($result_key);
+                $result_key = $this->makeValuesReferenced($result_key);
+                call_user_func_array(array($stmt, 'bind_result'), $result_key);
+                while ($stmt->fetch()) {
+                    array_push($result, $result_key);
+                }
+                $stmt->close();
+                if (empty($result)) {
+                    return null;
+                } else {
+                    return $result;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /* 条件查询所有行-string值
+     *@method get_rows_string
+     *@for easy_mysqli
+     *@param {string} $table 表
+     *@param {string} $operate 比较符
+     *@param {string} $key 键
+     *@param {string} $value 值
+     *@param {array string} $result_key 要查询的字段
+     *@return {array} | {bool} | {null}
+     */
+    public function get_rows_string(string $table, array $result_key, string $key, string $value, string $operate = "=")
+    {
+        if ($this->connect_status) {
+            $result = array();
+            $result_key_string = "";
+            for ($i = 0; $i < count($result_key); $i++) {
+                if ($i === count($result_key) - 1) {
+                    $result_key_string .= $result_key[$i];
+                } else {
+                    $result_key_string .= $result_key[$i] . ",";
+                }
+            }
+            $sql_string = "SELECT {$result_key_string} FROM {$table} WHERE {$key} {$operate} '{$value}'";
+            if ($stmt = mysqli_prepare($this->connect, $sql_string)) {
+                $stmt->store_result();
+                $stmt->execute();
+                $result_key = array_merge($result_key);
+                $result_key = $this->makeValuesReferenced($result_key);
+                call_user_func_array(array($stmt, 'bind_result'), $result_key);
+                while ($stmt->fetch()) {
+                    array_push($result, $result_key);
                 }
                 $stmt->close();
                 if (empty($result)) {
