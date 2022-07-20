@@ -57,7 +57,6 @@ switch ($method) {
         else
             $user_id = false;
         $data = input_to_json(file_get_contents('php://input'));
-        $user_id = check_token($token, $con);
         if ($user_id != false) {
             $image_id = (int)$data["id"];
             // 先检查是否有头像记录

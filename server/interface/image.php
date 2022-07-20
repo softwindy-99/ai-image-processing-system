@@ -7,7 +7,7 @@
 
 declare(strict_types=1); // 打开强类型模式
 $config_database = json_decode(file_get_contents("../config/database.json"));
-$config_upload = json_decode(file_get_contents("../config/upload.json"),true);
+$config_upload = json_decode(file_get_contents("../config/upload.json"), true);
 
 /* 引入 */
 include "../lib/easy_mysqli.php";
@@ -112,6 +112,14 @@ switch ($method) {
             $rep->set_message("token无效");
         }
         break;
+    case "PUT":
+        $rep->set_code(200);
+        $rep->set_status(false);
+        $rep->set_message("无此操作");
+    case "DELETE":
+        $rep->set_code(200);
+        $rep->set_status(false);
+        $rep->set_message("无此操作");
     default:
         $rep->set_code(200);
         $rep->set_status(false);
