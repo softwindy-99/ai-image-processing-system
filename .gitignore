@@ -4,3 +4,4 @@ node_modules
 dist
 # python
 __pycache__
+ai
