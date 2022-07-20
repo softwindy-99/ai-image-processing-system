@@ -111,6 +111,7 @@ class easy_mysqli
                 $stmt->bind_param("s", $value);
                 $stmt->bind_result($result);
                 $stmt->execute();
+                $stmt->fetch();
                 $stmt->close();
                 if ($result === "") {
                     return null;
@@ -143,6 +144,7 @@ class easy_mysqli
                 $stmt->bind_param("i", $value);
                 $stmt->bind_result($result);
                 $stmt->execute();
+                $stmt->fetch();
                 $stmt->close();
                 if ($result === "") {
                     return null;
