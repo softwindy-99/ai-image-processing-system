@@ -99,7 +99,7 @@ class easy_mysqli
      *@param {string} $table 表
      *@param {string} $key 键
      *@param {string} $value 值
-     *@param {string} $resulet_key 要查询的字段
+     *@param {string} $result_key 要查询的字段
      *@return {string} | {bool} | {null}
      */
     public function get_value_string(string $table, string $key, string $value, string $result_key)
@@ -111,7 +111,6 @@ class easy_mysqli
                 $stmt->bind_param("s", $value);
                 $stmt->bind_result($result);
                 $stmt->execute();
-                $stmt->fetch();
                 $stmt->close();
                 if ($result === "") {
                     return null;
@@ -132,7 +131,7 @@ class easy_mysqli
      *@param {string} $table 表
      *@param {string} $key 键
      *@param {int} $value 值
-     *@param {string} $resulet_key 要查询的字段
+     *@param {string} $result_key 要查询的字段
      *@return {string} | {bool} | {null}
      */
     public function get_value_int(string $table, string $key, int $value, string $result_key)
@@ -144,9 +143,51 @@ class easy_mysqli
                 $stmt->bind_param("i", $value);
                 $stmt->bind_result($result);
                 $stmt->execute();
-                $stmt->fetch();
                 $stmt->close();
                 if ($result === "") {
+                    return null;
+                } else {
+                    return $result;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /* 查询所有行
+     *@method get_all_rows
+     *@for easy_mysqli
+     *@param {string} $table 表
+     *@param {array string} $result_key 要查询的字段
+     *@return {array} | {bool} | {null}
+     */
+    public function get_all_rows(string $table, array $result_key)
+    {
+        if ($this->connect_status) {
+            $result = array();
+            $result_key_string = "";
+            for ($i = 0; $i < count($result_key); $i++) {
+                if ($i === count($result_key) - 1) {
+                    $result_key_string .= $result_key[$i];
+                } else {
+                    $result_key_string .= $result_key[$i] . ",";
+                }
+            }
+            $sql_string = "SELECT {$result_key_string} FROM {$table} ";
+            if ($stmt = mysqli_prepare($this->connect, $sql_string)) {
+                $stmt->store_result();
+                $stmt->execute();
+                $result_key = array_merge($result_key);
+                $result_key = $this->makeValuesReferenced($result_key);
+                call_user_func_array(array($stmt, 'bind_result'), $result_key);
+                while($stmt->fetch()){
+                    array_push($result,$result_key);
+                }
+                $stmt->close();
+                if (empty($result)) {
                     return null;
                 } else {
                     return $result;
