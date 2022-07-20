@@ -40,7 +40,7 @@ $rep->set_content_type("application/json", "charset=UTF-8");
 //  1. 检验 token
 //  2. 检验权限
 //  3. 查询
-$result = null;
+$result = array();
 switch ($method) {
     case "GET":
         if ($token != null)
@@ -50,12 +50,21 @@ switch ($method) {
         if ($user_id != false) {
             $user_permission = (int)$con->get_value_int("user_permission", "user_id", $user_id, "permission");
             if ($user_permission < 2) {
-                $rows = $con->get_all_rows("user_history", ["server_id", "system", "time", "ip", "out_id", "in_id"]);
-                $result = $rows;
+                $rows = $con->get_all_rows("history", ["server_id", "system", "creat_time", "ip", "out_id", "in_id"]);
+                for ($i = 0; $i < count($rows); $i++) {
+                    $temp["server_id"] = $rows[$i][0];
+                    $temp["system"] = $rows[$i][1];
+                    $temp["creat_time"] = $rows[$i][2];
+                    $temp["ip"] = $rows[$i][3];
+                    $temp["out_id"] = $rows[$i][4];
+                    $temp["in_id"] = $rows[$i][5];
+                    array_push($result, $temp);
+                }
                 $rep->set_code(100);
                 $rep->set_status(true);
                 $rep->set_message("请求成功");
-                $rep->set_result($result);
+                if ($result != null || $result != false)
+                    $rep->set_result($result);
             } else {
                 $rep->set_code(200);
                 $rep->set_status(false);
