@@ -1,19 +1,7 @@
-# node 
-node_modules
-
-# build
-dist
-
-# python
-__pycache__
-ai
-
-# vue-cli
-HelloWorld.vue
-AboutView.vue
-
-# Mac
 .DS_Store
+node_modules
+/dist
+
 
 # local env files
 .env.local
