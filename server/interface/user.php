@@ -77,6 +77,7 @@ switch ($method) {
                         $result["username"] = $username;
                         $result["email"] = $email;
                         $result["profile_url"] = null;
+                        $result["user_id"] = $user_id;
                         $rep->set_result($result);
                     } else {
                         $image_id = (int)$image_id;
@@ -87,6 +88,7 @@ switch ($method) {
                         $result["username"] = $username;
                         $result["email"] = $email;
                         $result["profile_url"] = $profile_url;
+                        $result["user_id"] = $user_id;
                         $rep->set_result($result);
                     }
                 } else {
@@ -106,6 +108,7 @@ switch ($method) {
                     $result["username"] = $username;
                     $result["email"] = $email;
                     $result["profile_url"] = null;
+                    $result["user_id"] = $user_id;
                     $rep->set_result($result);
                 } else {
                     $image_id = (int)$image_id;
@@ -116,6 +119,7 @@ switch ($method) {
                     $result["username"] = $username;
                     $result["email"] = $email;
                     $result["profile_url"] = $profile_url;
+                    $result["user_id"] = $user_id;
                     $rep->set_result($result);
                 }
             }
