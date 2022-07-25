@@ -62,14 +62,65 @@ switch ($method) {
         else
             $user_id = false;
         if ($user_id != false) {
-            $id = (int)$_GET["id"];
+
             $user_permission = (int)$con->get_value_int("user_permission", "user_id", $user_id, "permission");
             if ($user_permission === 2) {
                 // 普通用户
-                if ($user_id === $id) {
+                $username = $con->get_value_int("user", "id", $user_id, "name");
+                $email = $con->get_value_int("user", "id", $user_id, "email");
+                $image_id = $con->get_value_int("user_profile_photo", "user_id", $user_id, "image_id");
+                if ($image_id === null || $image_id === false) {
+                    $rep->set_code(101);
+                    $rep->set_status(true);
+                    $rep->set_message("请求成功");
+                    $result["username"] = $username;
+                    $result["email"] = $email;
+                    $result["profile_url"] = null;
+                    $result["user_id"] = $user_id;
+                    $rep->set_result($result);
+                } else {
+                    $image_id = (int)$image_id;
+                    $profile_url = $con->get_value_int("image_upload", "id", $image_id, "url");
+                    $rep->set_code(102);
+                    $rep->set_status(true);
+                    $rep->set_message("请求成功");
+                    $result["username"] = $username;
+                    $result["email"] = $email;
+                    $result["profile_url"] = $profile_url;
+                    $result["user_id"] = $user_id;
+                    $rep->set_result($result);
+                }
+            } else {
+                // 管理用户
+                $id = $_GET["id"];
+                if ($id != null) { // 要查询的用户
+                    $id = (int)$id;
                     $username = $con->get_value_int("user", "id", $id, "name");
                     $email = $con->get_value_int("user", "id", $id, "email");
                     $image_id = $con->get_value_int("user_profile_photo", "user_id", $id, "image_id");
+                    if ($image_id === null || $image_id === false) {
+                        $rep->set_code(101);
+                        $rep->set_status(true);
+                        $rep->set_message("请求成功");
+                        $result["username"] = $username;
+                        $result["email"] = $email;
+                        $result["profile_url"] = null;
+                        $rep->set_result($result);
+                    } else {
+                        $image_id = (int)$image_id;
+                        $profile_url = $con->get_value_int("image_upload", "id", $image_id, "url");
+                        $rep->set_code(102);
+                        $rep->set_status(true);
+                        $rep->set_message("请求成功");
+                        $result["username"] = $username;
+                        $result["email"] = $email;
+                        $result["profile_url"] = $profile_url;
+                        $rep->set_result($result);
+                    }
+                } else { // 查询本账户
+                    $username = $con->get_value_int("user", "id", $user_id, "name");
+                    $email = $con->get_value_int("user", "id", $user_id, "email");
+                    $image_id = $con->get_value_int("user_profile_photo", "user_id", $user_id, "image_id");
                     if ($image_id === null || $image_id === false) {
                         $rep->set_code(101);
                         $rep->set_status(true);
@@ -91,36 +142,6 @@ switch ($method) {
                         $result["user_id"] = $user_id;
                         $rep->set_result($result);
                     }
-                } else {
-                    $rep->set_code(200);
-                    $rep->set_status(false);
-                    $rep->set_message("权限不正确");
-                }
-            } else {
-                // 管理用户
-                $username = $con->get_value_int("user", "id", $id, "name");
-                $email = $con->get_value_int("user", "id", $id, "email");
-                $image_id = $con->get_value_int("user_profile_photo", "user_id", $id, "image_id");
-                if ($image_id === null || $image_id === false) {
-                    $rep->set_code(101);
-                    $rep->set_status(true);
-                    $rep->set_message("请求成功");
-                    $result["username"] = $username;
-                    $result["email"] = $email;
-                    $result["profile_url"] = null;
-                    $result["user_id"] = $user_id;
-                    $rep->set_result($result);
-                } else {
-                    $image_id = (int)$image_id;
-                    $profile_url = $con->get_value_int("image_upload", "id", $image_id, "url");
-                    $rep->set_code(102);
-                    $rep->set_status(true);
-                    $rep->set_message("请求成功");
-                    $result["username"] = $username;
-                    $result["email"] = $email;
-                    $result["profile_url"] = $profile_url;
-                    $result["user_id"] = $user_id;
-                    $rep->set_result($result);
                 }
             }
         } else {

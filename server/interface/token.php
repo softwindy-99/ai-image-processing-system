@@ -83,7 +83,7 @@ switch ($method) {
                 }
             }
         } else {
-            $rep->set_code(200);
+            $rep->set_code(201);
             $rep->set_status(false);
             $rep->set_message("非法请求");
         }
