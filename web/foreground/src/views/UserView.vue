@@ -12,17 +12,16 @@ import { defineComponent } from 'vue';
 import UserNav from '@/components/UserNav.vue';
 export default defineComponent({
     name: 'UserView',
-    data() {
-        return {
-
-        }
-    },
     components: {
         UserNav
     },
-    methods: {
-  
+    watch:{
+    "$store.state.login_flag"(newVal){
+      if(!newVal){
+        console.log("LogOnView: user is loginout, route to '/login'");
+      }
     }
+  }
 });
 </script>
 <style lang="scss" scoped>

@@ -8,7 +8,8 @@
             </div>
             <div class="menu">
                 <ul>
-                    <li v-for="item in nav_menu" v-bind:key="item.id" v-bind:class="item.class_css" v-on:click="click_to(item.link)">
+                    <li v-for="item in nav_menu" v-bind:key="item.id" v-bind:class="item.class_css"
+                        v-on:click="click_to(item.link)">
                         {{ item.title }}
                     </li>
                 </ul>
@@ -24,7 +25,7 @@ export default defineComponent({
     data() {
         return {
             nav_menu: [
-                { id: 1, title: "个人中心", link: "/user", class_css: "selected" },
+                { id: 1, title: "个人中心", link: "/user/home", class_css: "unselect" },
                 { id: 2, title: "密钥设置", link: "/user/key", class_css: "unselect" },
                 { id: 3, title: "账号设置", link: "/user/account", class_css: "unselect" },
                 { id: 4, title: "退出登录", link: "/user/loginout", class_css: "unselect" }
@@ -42,28 +43,39 @@ export default defineComponent({
     methods: {
         click_to(url: string) {
             this.$router.push(url);
-            this.nav_menu.forEach((item)=>{
-                console.log(item);
-                if(item.link != url){
+            this.nav_menu.forEach((item) => {
+                if (item.link != url) {
                     item.class_css = "unselect";
                 }
-                else{
+                else {
                     item.class_css = "selected";
                 }
             });
         }
     },
-    created(){
-        const path = this.$route.path;
-        this.nav_menu.forEach((item)=>{
-                console.log(item);
-                if(item.link != path){
+    watch: {
+        '$route.path': function (newVal) {
+            const path = newVal;
+            this.nav_menu.forEach((item) => {
+                if (item.link != path) {
                     item.class_css = "unselect";
                 }
-                else{
+                else {
                     item.class_css = "selected";
                 }
             });
+        }
+    },
+    created() {
+        const path = this.$route.path;
+        this.nav_menu.forEach((item) => {
+            if (item.link != path) {
+                item.class_css = "unselect";
+            }
+            else {
+                item.class_css = "selected";
+            }
+        });
     }
 });
 
@@ -132,7 +144,7 @@ export default defineComponent({
 }
 
 .selected {
-    color: #336699!important;
+    color: #336699 !important;
     background-color: #ffffff
 }
 

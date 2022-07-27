@@ -1,6 +1,6 @@
 import Axios from "./index";
-
-function post_token(username: string, password: string) {
+import store from "@/store";
+function post_token(username: string, password: string, callback: any) {
     const params: FormData = new FormData();
     params.append("username", username);
     params.append("password", password);
@@ -12,9 +12,7 @@ function post_token(username: string, password: string) {
     })
         .then(
             (response) => {
-                console.log(response);
-                if (response.data.status === "success")
-                    localStorage.setItem("Authorization", response.data.result.token);
+                callback(response);
             })
         .catch(
             (reason) => {

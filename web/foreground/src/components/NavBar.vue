@@ -7,7 +7,7 @@
       </ul>
       <div class="user">
         <span v-if='username === ""' v-on:click="click_to('/login')">点击登录</span>
-        <span v-else v-on:click="click_to('/user')">{{ username }}</span>
+        <span v-else v-on:click="click_to('/user/home')">{{ username }}</span>
         <img v-if='user_profile_photo === ""' src="../assets/default_avatar.png" />
         <img v-else v-bind:src="user_profile_photo" />
       </div>

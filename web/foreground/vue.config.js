@@ -12,6 +12,10 @@ module.exports = defineConfig({
       "/token": {
         target: "http://localhost:80/server/interface/token.php",
         changeOrigin: true,
+      },
+      "/history": {
+        target: "http://localhost:80/server/interface/history.php",
+        changeOrigin: true,
       }
     }
   }

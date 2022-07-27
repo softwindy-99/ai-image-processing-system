@@ -1,25 +1,25 @@
 <template>
   <div class="login">
-    <UserLogin></UserLogin>
+    <UserLogon></UserLogon>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import UserLogin from '../components/UserLogin.vue';
+import UserLogon from '@/components/UserLogon.vue';
 export default defineComponent({
-  name: 'LoginView',
+  name: 'LogonView',
   data() {
     return {
     }
   },
   components: {
-    UserLogin,
+    UserLogon
   },
-  watch:{
-    "$store.state.login_flag"(newVal){
-      if(newVal){
-        console.log("LoginView: user is logined, route to '/usr/home'");
+  watch: {
+    "$store.state.login_flag"(newVal) {
+      if (newVal) {
+        console.log("LogOnView: user is logined, route to '/usr/home'");
         this.$router.push("/user/home");
       }
     }
