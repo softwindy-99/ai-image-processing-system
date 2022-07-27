@@ -93,7 +93,7 @@ switch ($method) {
             } else {
                 // 管理用户
                 $id = $_GET["id"];
-                if ($id != null) { // 要查询的用户
+                if ($id != null) { // 查询其他用户
                     $id = (int)$id;
                     $username = $con->get_value_int("user", "id", $id, "name");
                     $email = $con->get_value_int("user", "id", $id, "email");
@@ -105,6 +105,7 @@ switch ($method) {
                         $result["username"] = $username;
                         $result["email"] = $email;
                         $result["profile_url"] = null;
+                        $result["user_id"] = $id;
                         $rep->set_result($result);
                     } else {
                         $image_id = (int)$image_id;
@@ -115,9 +116,10 @@ switch ($method) {
                         $result["username"] = $username;
                         $result["email"] = $email;
                         $result["profile_url"] = $profile_url;
+                        $result["user_id"] = $id;
                         $rep->set_result($result);
                     }
-                } else { // 查询本账户
+                } else { // 查询自己
                     $username = $con->get_value_int("user", "id", $user_id, "name");
                     $email = $con->get_value_int("user", "id", $user_id, "email");
                     $image_id = $con->get_value_int("user_profile_photo", "user_id", $user_id, "image_id");
@@ -257,7 +259,7 @@ switch ($method) {
                     $rep->set_message("邮箱格式错误");
                 }
             } else {
-                $rep->set_code(200);
+                $rep->set_code(201);
                 $rep->set_status(false);
                 $rep->set_message("非法请求");
             }

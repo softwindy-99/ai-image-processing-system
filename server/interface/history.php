@@ -51,14 +51,16 @@ switch ($method) {
             $user_permission = (int)$con->get_value_int("user_permission", "user_id", $user_id, "permission");
             if ($user_permission < 2) {
                 $rows = $con->get_all_rows("history", ["server_id", "system", "creat_time", "ip", "out_id", "in_id"]);
-                for ($i = 0; $i < count($rows); $i++) {
-                    $temp["server_id"] = $rows[$i][0];
-                    $temp["system"] = $rows[$i][1];
-                    $temp["creat_time"] = $rows[$i][2];
-                    $temp["ip"] = $rows[$i][3];
-                    $temp["out_id"] = $rows[$i][4];
-                    $temp["in_id"] = $rows[$i][5];
-                    array_push($result, $temp);
+                if ($rows != null || $rows != false) {
+                    for ($i = 0; $i < count($rows); $i++) {
+                        $temp["server_id"] = $rows[$i][0];
+                        $temp["system"] = $rows[$i][1];
+                        $temp["creat_time"] = $rows[$i][2];
+                        $temp["ip"] = $rows[$i][3];
+                        $temp["out_id"] = $rows[$i][4];
+                        $temp["in_id"] = $rows[$i][5];
+                        array_push($result, $temp);
+                    }
                 }
                 $rep->set_code(100);
                 $rep->set_status(true);
