@@ -15,22 +15,21 @@ export default defineComponent({
     components: {
         UserNav
     },
-    watch:{
-    "$store.state.login_flag"(newVal){
-      if(!newVal){
-        console.log("LogOnView: user is loginout, route to '/login'");
-      }
+    watch: {
+        "$store.state.login_flag"(newVal) {
+            if (!newVal) {
+                console.log("LogOnView: user is loginout, route to '/login'");
+            }
+        }
     }
-  }
 });
 </script>
 <style lang="scss" scoped>
-@charset "UTF-8";
-$large_width: 100%;
+@import "@/scss/index.scss";
 
-@media (min-width: 1312px) {
+@media (min-width: $desktop_width) {
     .user {
-        width: $large_width;
+        width: 100%;
         height: auto;
         // 通过绝对定位的方式实现占满剩余高度
         position: absolute;
@@ -38,19 +37,22 @@ $large_width: 100%;
         bottom: 0px;
         // 防止挡住 nav 的边框阴影
         z-index: -1;
+        padding: 32px 0;
+        min-height: 560px;
         background-color: #f4f9ff;
     }
 
     .content {
         width: 95%;
-        height: 90%;
-        min-height: 560px;
+        height: 100%;
         border-radius: 5px;
-        margin: 32px auto;
+        margin: 0 auto;
         box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
         background-color: #fff;
         position: relative;
         overflow: hidden;
+        display: flex;
+        flex-direction: row;
     }
 
     UserNav {

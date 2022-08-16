@@ -27,12 +27,10 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-@charset "UTF-8";
-$large_width: 100%;
-
-@media (min-width: 1312px) {
+@import "@/scss/index.scss";
+@media (min-width: $desktop_width) {
   .login {
-    width: $large_width;
+    width: 100%;
     height: auto;
     // 通过绝对定位的方式实现占满剩余高度
     position: absolute;

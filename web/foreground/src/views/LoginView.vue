@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login-view">
     <UserLogin></UserLogin>
   </div>
 </template>
@@ -27,17 +27,17 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-@charset "UTF-8";
-$large_width: 100%;
-
-@media (min-width: 1312px) {
-  .login {
-    width: $large_width;
+@import "@/scss/index.scss";
+@media (min-width: $desktop_width) {
+  .login-view {
+    width: 100%;
     height: auto;
+    
     // 通过绝对定位的方式实现占满剩余高度
     position: absolute;
     top: 64px;
     bottom: 0px;
+
     // 防止挡住 nav 的边框阴影
     z-index: -1;
     background-color: #f4f9ff;

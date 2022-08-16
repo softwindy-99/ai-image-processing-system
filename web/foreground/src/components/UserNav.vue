@@ -82,74 +82,74 @@ export default defineComponent({
 </script>
 
 <style style lang="scss" scoped>
-@charset "UTF-8";
+@import "@/scss/index.scss";
 
-.navbar {
-    width: 20%;
-    height: auto;
-    background-color: #336699;
-    // 绝对定位实现占满高度
-    position: absolute;
-    top: 0;
-    bottom: 0;
+@media (min-width: $desktop_width) {
+    .container {
+        width: 320px;
+        height: 100%;
+    }
 
-}
+    .navbar {
+        width: 100%;
+        height: 100%;
+        background-color: #336699;
+    }
 
-.user_avatar {
-    width: 100%;
-    height: 20%;
-    margin: 32px auto;
-}
+    .user_avatar {
+        width: 100%;
+        height: auto;
+        padding: 32px 0;
+    }
 
-.user_avatar img {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    margin: 8px auto;
-    display: block;
-    background-color: #fff;
-}
+    .user_avatar img {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: block;
+        background-color: #fff;
+    }
 
-.user_avatar p {
-    font-size: 24px;
-    color: #fff;
-    text-align: center;
-    user-select: none;
-}
+    .user_avatar p {
+        font-size: 24px;
+        color: #fff;
+        text-align: center;
+        user-select: none;
+    }
 
-.menu {
-    width: 100%;
-    position: absolute;
-    top: 170px;
-    bottom: 0;
-}
+    .menu {
+        width: 100%;
+        height: auto;
+    }
 
-.menu li {
-    width: 80%;
-    height: auto;
-    padding: 10px 0px;
-    margin: 10px auto;
-    border-radius: 20px;
-    font-size: 20px;
-    color: #fff;
-    text-align: center;
-    list-style: none;
-    transition: 0.1s all ease;
-    cursor: pointer;
-}
+    .menu li {
+        width: 80%;
+        height: auto;
+        padding: 10px 0px;
+        margin: 8px auto;
+        border-radius: 20px;
+        font-size: 20px;
+        color: #fff;
+        text-align: center;
+        list-style: none;
+        transition: 0.1s all ease;
+        cursor: pointer;
+    }
 
-.menu li:hover {
-    color: #336699;
-    background-color: #ffffff
-}
+    .menu li:hover {
+        color: #336699;
+        background-color: #ffffff
+    }
 
-.selected {
-    color: #336699 !important;
-    background-color: #ffffff
-}
+    .selected {
+        color: #336699 !important;
+        background-color: #ffffff
+    }
 
-.unselect {
-    color: #ffffff;
-    background-color: #336699
+    .unselect {
+        color: #ffffff;
+        background-color: #336699
+    }
 }
 </style>

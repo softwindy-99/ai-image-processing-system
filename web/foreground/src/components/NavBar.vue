@@ -22,8 +22,7 @@ export default defineComponent({
   data() {
     return {
       nav_menu: [
-        { id: 1, title: "文档污损", link: "/net" },
-        { id: 2, title: "图像放大", link: "/srgan" }
+        { id: 1, title: "图像修复", link: "/repair" }
       ],
     }
   },
