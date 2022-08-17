@@ -19,7 +19,7 @@
 import UserInput from './UserInput.vue';
 import { defineComponent } from 'vue';
 import { post_token } from '@/axios/token';
-import { get_user } from '@/axios/user';
+import { getUser } from '@/axios/user';
 export default defineComponent({
     name: "UserLogin",
     emits: {
@@ -47,7 +47,7 @@ export default defineComponent({
 
                     this.waring_text = "登录成功，正在跳转...";
                     this.waring_flag = true;
-                    get_user((response: any) => {
+                    getUser((response: any) => {
                         const id: number = (response.data.result.user_id as number);
                         const name: string = (response.data.result.username as string);
                         const email: string = (response.data.result.user_email as string);

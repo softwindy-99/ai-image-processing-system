@@ -19,7 +19,7 @@
 <script lang="ts">
 import UserInput from './UserInput.vue';
 import { defineComponent } from 'vue';
-import { post_user } from '@/axios/user';
+import { postUser } from '@/axios/user';
 export default defineComponent({
     name: "UserLogon",
     components: {
@@ -35,7 +35,7 @@ export default defineComponent({
         click_logon() {
             console.log("UserLogin-click_logon(): try to logon");
 
-            post_user(
+            postUser(
                 (this.$refs.username as HTMLInputElement).value,// 将 username 声明为正确的类型，否则为 unknown，无法访问到对象属性
                 (this.$refs.password as HTMLInputElement).value,
                 (this.$refs.email as HTMLInputElement).value,
