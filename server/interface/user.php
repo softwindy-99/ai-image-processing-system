@@ -19,7 +19,7 @@ $method = $_SERVER['REQUEST_METHOD']; // string
 $headers = getallheaders();
 $token = $headers['Authorization']; // token
 //if ($token != null)
-//   $token = substr($token, 7); // 使用 PostMan 调试时有 Bearer 前缀，需要去除
+//    $token = substr($token, 7); // 使用 PostMan 调试时有 Bearer 前缀，需要去除
 
 /* 数据库 */
 $con = new easy_mysqli(
@@ -283,6 +283,72 @@ switch ($method) {
                     $new_email = $data["email"];
                     if ($new_email != null) {
                         if (check_emailstring($new_email)) {
+                            if (!$con->update_single_row("user", ["email"], [$new_email], ["s"], "id", $user_id)) {
+                                $result["email"] = "发生未知错误，请稍后重试";
+                            } else {
+                                $result["email"] = "成功";
+                                $con->commit();
+                            }
+                        } else {
+                            $result["email"] = "格式错误";
+                        }
+                    } else {
+                        $result["email"] = "为空";
+                    }
+                    // 更新 password
+                    $new_password = $data["password"];
+                    if ($new_password != null) {
+                        if (!$con->update_single_row("user", ["password"], [md5($new_password)], ["s"], "id", $user_id)) {
+                            $result["password"] = "发生未知错误，请稍后重试";
+                        } else {
+                            $result["password"] = "成功";
+                            $con->commit();
+                        }
+                    } else {
+                        $result["password"] = "为空";
+                    }
+                } else {
+                    $rep->set_code(200);
+                    $rep->set_status(false);
+                    $rep->set_message("权限不正确");
+                }
+            } else {
+                // 管理用户
+                if ($id == null) {
+                    // 更新自己
+                    // 更新 email
+                    $new_email = $data["email"];
+                    if ($new_email != null) {
+                        if (check_emailstring($new_email)) {
+                            if (!$con->update_single_row("user", ["email"], [$new_email], ["s"], "id", $user_id)) {
+                                $result["email"] = "发生未知错误，请稍后重试";
+                            } else {
+                                $result["email"] = "成功";
+                                $con->commit();
+                            }
+                        } else {
+                            $result["email"] = "格式错误";
+                        }
+                    } else {
+                        $result["email"] = "为空";
+                    }
+                    // 更新 password
+                    $new_password = $data["password"];
+                    if ($new_password != null) {
+                        if (!$con->update_single_row("user", ["password"], [md5($new_password)], ["s"], "id", $user_id)) {
+                            $result["password"] = "发生未知错误，请稍后重试";
+                        } else {
+                            $result["password"] = "成功";
+                            $con->commit();
+                        }
+                    } else {
+                        $result["password"] = "为空";
+                    }
+                } else {
+                    // 更新 email
+                    $new_email = $data["email"];
+                    if ($new_email != null) {
+                        if (check_emailstring($new_email)) {
                             if (!$con->update_single_row("user", ["email"], [$new_email], ["s"], "id", $id)) {
                                 $result["email"] = "发生未知错误，请稍后重试";
                             } else {
@@ -307,40 +373,6 @@ switch ($method) {
                     } else {
                         $result["password"] = "为空";
                     }
-                } else {
-                    $rep->set_code(200);
-                    $rep->set_status(false);
-                    $rep->set_message("权限不正确");
-                }
-            } else {
-                // 管理用户
-                // 更新 email
-                $new_email = $data["email"];
-                if ($new_email != null) {
-                    if (check_emailstring($new_email)) {
-                        if (!$con->update_single_row("user", ["email"], [$new_email], ["s"], "id", $id)) {
-                            $result["email"] = "发生未知错误，请稍后重试";
-                        } else {
-                            $result["email"] = "成功";
-                            $con->commit();
-                        }
-                    } else {
-                        $result["email"] = "格式错误";
-                    }
-                } else {
-                    $result["email"] = "为空";
-                }
-                // 更新 password
-                $new_password = $data["password"];
-                if ($new_password != null) {
-                    if (!$con->update_single_row("user", ["password"], [md5($new_password)], ["s"], "id", $id)) {
-                        $result["password"] = "发生未知错误，请稍后重试";
-                    } else {
-                        $result["password"] = "成功";
-                        $con->commit();
-                    }
-                } else {
-                    $result["password"] = "为空";
                 }
             }
             $rep->set_code(100);
